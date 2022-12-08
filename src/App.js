@@ -1,7 +1,9 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import "./App.css";
 import AppRouter from "./router";
+import axios from "axios";
 
 const initialState = {
   loading: false,
@@ -47,15 +49,33 @@ let store;
 if (process.env.NODE_ENV === "development") {
   store = createStore(
     rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    compose(
+      applyMiddleware(thunk),
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
   );
 } else {
-  store = createStore(rootReducer);
+  store = createStore(rootReducer, applyMiddleware(thunk));
 }
 
 // store.subscribe(() => console.log(store.getState()));
 
 // store.dispatch({ type: "SET_TOKEN", payload: "ERDEM" });
+
+export const getUserList = async (dispatch) => {
+  try {
+    dispatch({ type: "SET_LOADING_TRUE" });
+    const { data } = await axios.get(
+      "https://jsonplaceholder.typicode.com/users"
+    );
+    dispatch({ type: "SET_USER_LIST", payload: data });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dispatch({ type: "SET_LOADING_FALSE" });
+  }
+};
 
 function App() {
   return (
