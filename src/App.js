@@ -28,11 +28,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return { ...state, language: payload };
     case "CLEAR_ERROR":
       return { ...state, error: [] };
-    case "SET_USER_LİST":
+    case "SET_USER_LIST":
       return { ...state, userList: payload };
     case "SET_SELECTED_USER":
       return { ...state, selectedUser: payload };
-    case "SET_NEWS_LİST":
+    case "SET_NEWS_LIST":
       return { ...state, newList: payload };
     case "SET_SELECTED_NEWS":
       return { ...state, selectedNews: payload };
