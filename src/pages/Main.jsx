@@ -8,33 +8,18 @@ import {
   TableCell,
 } from "@mui/material";
 import { useEffect } from "react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserList } from "../App";
+import { getUserList } from "../redux/thunks/userThunk";
 
 const Main = () => {
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.loading);
+  const loading = useSelector((state) => state.app.loading);
 
-  const userList = useSelector((state) => state.userList);
-
-  // const getUserList = async () => {
-  //   try {
-  //     dispatch({ type: "SET_LOADING_TRUE" });
-  //     const { data } = await axios.get(
-  //       "https://jsonplaceholder.typicode.com/users"
-  //     );
-  //     dispatch({ type: "SET_USER_LIST", payload: data });
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     dispatch({ type: "SET_LOADING_FALSE" });
-  //   }
-  // };
+  const userList = useSelector((state) => state.user.userList);
 
   useEffect(() => {
-    dispatch(getUserList);
+    dispatch(getUserList());
   }, []);
 
   return (
