@@ -14,9 +14,9 @@ import { getUserList } from "../redux/thunks/userThunk";
 const Main = () => {
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.app.loading);
+  const { loading } = useSelector((state) => state.app);
 
-  const userList = useSelector((state) => state.user.userList);
+  const { userList } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getUserList());
